@@ -2,7 +2,8 @@ import streamlit as st
 
 from utils.conversions import (
     convert_length, 
-    convert_mass
+    convert_mass, 
+    convert_temperature
 )
 
 def show(): 
@@ -13,7 +14,8 @@ def show():
         "Category",
         [
             "Length", 
-            "Mass"
+            "Mass", 
+            "Temperature"
         ]
     )
 
@@ -33,11 +35,18 @@ def show():
             "Feet"
 
         ]
-    else: 
+    elif category == "Mass": 
         units = [
             "Kilograms", 
             "Grams", 
             "Pounds"
+        ]
+
+    elif category == "Temperature": 
+        units = [
+            "Celsius", 
+            "Fahrenheit", 
+            "Kelvin"
         ]
 
     from_unit = st.selectbox(
@@ -69,16 +78,33 @@ def show():
                     to_unit
                 )
 
-            else: 
+            elif category == "Mass": 
                 result = convert_mass(
                     value, 
                     from_unit, 
                     to_unit
                 )
 
-            st.success(
-                f"{value} {from_unit} = {result:.4f} {to_unit}"
+            elif category == "Temperature":
+                result = convert_temperature(
+                    value, 
+                    from_unit, 
+                    to_unit
+                )
+
+            st.success("Conversion Complete!")
+
+            st.metric(
+                label = "Result", 
+                value = f"{result:.4f} {to_unit}"
             )
+            with st.expander("Engineering Notes"):
+                st.write(
+                """
+                - Length conversions use meters as the base unit.
+                - Mass conversions use kilograms as the base unit.
+                - Temperature conversions use celsius as the intermediate unit.
+                """)
 
     st.caption(
         "Engineering Toolbox v1.0"
