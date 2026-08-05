@@ -92,14 +92,14 @@ def show():
                     to_unit
                 )
 
-            st.success("Conversion Complete!")
+        st.success("Conversion Complete!")
 
-            st.metric(
-                label = "Result", 
-                value = f"{result:.4f} {to_unit}"
-            )
-            with st.expander("Engineering Notes"):
-                st.write(
+        st.metric(
+            label = "Result", 
+            value = f"{result:.4f} {to_unit}"
+        )
+        with st.expander("Engineering Notes"):
+            st.write(
                 """
                 - Length conversions use meters as the base unit.
                 - Mass conversions use kilograms as the base unit.

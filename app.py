@@ -10,6 +10,10 @@ st.set_page_config(
     layout="wide"
 )
 
+from calculators.ideal_gas import (
+    show as show_ideal_gas
+)
+
 
 # Sidebar
 
@@ -78,4 +82,7 @@ if page == "🏠 Home":
 
 elif page == "📏 Unit Converter": 
     show_unit_converter()
+
+elif page == "⚗️ Ideal Gas Law": 
+    show_ideal_gas()
 
