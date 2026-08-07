@@ -2,6 +2,10 @@ import streamlit as st
 
 from calculators.unit_converter import show as show_unit_converter
 
+from calculators.pipe_flow import (
+    show as show_pipe_flow
+)
+
 # Page Configuration
 
 st.set_page_config(
@@ -85,4 +89,7 @@ elif page == "📏 Unit Converter":
 
 elif page == "⚗️ Ideal Gas Law": 
     show_ideal_gas()
+
+elif page == "🌊 Pipe Flow": 
+    show_pipe_flow()
 
