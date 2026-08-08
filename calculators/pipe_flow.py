@@ -1,4 +1,6 @@
-import streamlit as st 
+import streamlit as st
+import matplotlib.pyplot as plt
+import numpy as np 
 
 from utils.layout import (
     page_header, 
@@ -35,6 +37,42 @@ def classify_flow(reynolds):
 
     else: 
         return "Turbulent"
+
+def plot_reynolds_vs_velocity(
+    density,
+    velocity,
+    diameter, 
+    viscosity 
+):
+    """
+    Plot Reynolds Number as a function of velocity.
+    Highlights the current operating point.  
+    """
+    velocities = np.linspace(0.01, 5, 100)
+
+    reynolds_numbers = (density * velocities * diameter)/viscosity
+
+    current_reynolds = calculate_reynolds(
+        density, 
+        velocity, 
+        diameter, 
+        viscosity)
+
+    fig, ax = plt.subplots()
+
+    ax.plot(
+        velocities, reynolds_numbers, label="Reynolds Number"
+    )
+
+    ax.scatter(velocity, current_reynolds, s=80, label="Current Condition")
+
+    ax.set_xlabel("Velocity (m/s)")
+    ax.set_ylabel("Reynolds Number") 
+    ax.set_title("Reynolds Number vs. Velocity")
+
+    ax.legend()
+    ax.grid(True)
+    st.pyplot(fig)
 
 def show(): 
 
@@ -98,6 +136,9 @@ def show():
 
         else: 
             st.error("Flow Regime: Turbulent")
+
+        st.subheader("Reynolds Number Analysis")
+        plot_reynolds_vs_velocity(density, velocity, diameter, viscosity)
 
     engineering_notes( 
         """
