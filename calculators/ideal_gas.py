@@ -1,4 +1,9 @@
 from utils.constants import IDEAL_GAS_CONSTANT 
+from utils.layout import (
+    page_header, 
+    engineering_notes, 
+    footer
+)
 
 def calculate_pressure(
         volume, 
@@ -22,11 +27,9 @@ import streamlit as st
 
 def show():
 
-    st.title("⚗️ Ideal Gas Law")
-
-    st.write(
-        "Calculates the pressure using PV = nRT"
-    )
+    page_header(
+        "⚗️ Ideal Gas Law", 
+        "Solve PV =nRT by selecting the unknown variable.")
 
     volume = st.number_input(
         "Volume (m³)", 
@@ -65,13 +68,10 @@ def show():
                 f"{pressure:.2f} Pa"
             )
 
-            with st.expander("Equation Used"): 
+            engineering_notes(
 
-                st.latex(r"PV=nRT")
-
-                st.write(
                 """
-                Pressure is calculated using: 
+                Equation: 
                 
                 P = nRT / V 
                 
@@ -82,5 +82,13 @@ def show():
                 n = Moles 
                 R = Ideal Gas Constant 
                 T = Temperature
+
+                Assumptions: 
+                - Gas behaves ideally 
+                - Pressure is measured in Pascals 
+                - Volume is measured in cubic meters 
+                - Temperature is measured in Kelvin
                 """
+                
                 )
+            footer()

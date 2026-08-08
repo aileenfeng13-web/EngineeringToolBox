@@ -1,5 +1,11 @@
 import streamlit as st 
 
+from utils.layout import (
+    page_header, 
+    engineering_notes, 
+    footer
+)
+
 def calculate_reynolds(
         density, 
         velocity, 
@@ -31,12 +37,14 @@ def classify_flow(reynolds):
         return "Turbulent"
 
 def show(): 
-    st.title("🌊 Reynolds Number Calculator")
 
-    st.write(
+    page_header(
+        "🌊 Reynolds Number Calculator",
         """
-        Calculate Reynolds Number and determine the flow regime.
-        """
+        Calculate Reynolds Number and determine
+        whether flow is laminar, transitional,
+        or turbulent.
+        """   
     )
 
     density = st.number_input(
@@ -91,24 +99,19 @@ def show():
         else: 
             st.error("Flow Regime: Turbulent")
 
-    with st.expander("Equation Used"): 
+    engineering_notes( 
+        """
+        Reynolds Number predicts whether flow is laminar or turbulent. 
 
-        st.latex(
-            r"Re=\frac{\rho vD}{\mu}"
+        Equation: 
+        Re = ρvD/μ
+
+        Flow Classification: 
+        Laminar: Re < 2300 
+        Transitional: 2300 <= Re <= 4000 
+        Turbulent: Re > 4000
+        """
         )
-
-        st.write(
-            """
-            Reynolds Number predicts whether flow is laminar or turbulent. 
-
-            Typical ranges: 
-            Laminar: Re < 2300 
-            Transitional: 2300 <= Re <= 4000 
-            Turbulent: Re > 4000
-            """
-        )
-
-    st.divider()
 
     st.caption(
         """
@@ -117,3 +120,5 @@ def show():
         making flow more likely to remain laminar. 
         """
     )
+
+    footer()
