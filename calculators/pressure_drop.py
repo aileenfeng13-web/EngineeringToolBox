@@ -1,10 +1,38 @@
 import streamlit as st
+import math
 
 from utils.layout import (
     page_header,
     engineering_notes, 
     footer
 )
+
+def calculate_friction_factor(
+        reynolds, 
+        roughness, 
+        diameter
+):
+    """
+    Calculate Darcy friction factor based on flow regime.
+    """
+    if reynolds <= 0: 
+        raise ValueError("Reynolds number must be positive")
+
+    if reynolds < 2300: 
+        friction_factor = 64 / reynolds
+
+    else: 
+        friction_factor = (
+            0.25 
+            / (
+                math.log10(
+                    roughness / (3.7 * diameter)
+                    + 5.74 / (reynolds ** 0.9)
+                )
+                ** 2
+            )
+        )
+    return friction_factor
 
 def calculate_pressure_drop(
         friction_factor, 
@@ -19,7 +47,7 @@ def calculate_pressure_drop(
     pressure_drop = (
         friction_factor
         * (pipe_length / diameter) 
-        * (density * velocity ** 2 / 2)
+        * (density * velocity**2 / 2)
     )
 
     return pressure_drop
@@ -33,10 +61,18 @@ def show():
         """
     )
 
-    friction_factor = st.number_input(
-        "Darcy Friction Factor", 
-        value = 0.02, 
-        min_value=0.0001
+    viscosity = st.number_input(
+        "Dynamic Viscosity (Pa·s)", 
+        value = 0.001, 
+        min_value=0.000001, 
+        format="%.6f"
+    )
+
+    roughness = st.number_input(
+        "Pipe Roughness (m)", 
+        value = 0.000045, 
+        min_value=0.0,
+        format = "%.8f"
     )
 
     pipe_length = st.number_input(
@@ -63,10 +99,29 @@ def show():
         min_value=0.0
     )
 
-    if st.button("Calculate Pressure Drop"): 
+    if st.button("Calculate Pressure Drop"):
+        reynolds = (density * velocity * diameter / viscosity)
+
+        if reynolds < 2300: 
+            flow_regime = "Laminar"
+        elif reynolds <= 4000: 
+            flow_regime = "Transitional" 
+        else: 
+            flow_regime = "Turbulent"
+
+        friction_factor = calculate_friction_factor(
+            reynolds, roughness, diameter
+        ) 
+
         pressure_drop = calculate_pressure_drop(friction_factor, pipe_length, diameter, density, velocity)
 
         st.success("Calculation Complete")
+
+        st.metric("Reynolds Number", f"{reynolds:.0f}")
+
+        st.metric("Flow Regime", flow_regime)
+
+        st.metric("Friction Factor", f"{friction_factor:.5f}")
 
         st.metric("Pressure Drop", f"{pressure_drop:.2f} Pa")
 
