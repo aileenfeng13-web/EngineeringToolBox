@@ -46,9 +46,9 @@ def plot_reynolds_vs_velocity(
 ):
     """
     Plot Reynolds Number as a function of velocity.
-    Highlights the current operating point.  
+    Shows flow-regime boundaries.  
     """
-    velocities = np.linspace(0.01, 5, 100)
+    velocities = np.linspace(0.01, 5, 200)
 
     reynolds_numbers = (density * velocities * diameter)/viscosity
 
@@ -65,6 +65,18 @@ def plot_reynolds_vs_velocity(
     )
 
     ax.scatter(velocity, current_reynolds, s=80, label="Current Condition")
+
+    ax.axhline(
+        2300,
+        linestyle="--", 
+        label = "Laminar Limit"
+    )
+
+    ax.axhline(
+        4000, 
+        linestyle = "--", 
+        label = "Turbulent Limit"
+    )
 
     ax.set_xlabel("Velocity (m/s)")
     ax.set_ylabel("Reynolds Number") 

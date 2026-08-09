@@ -2,9 +2,9 @@ import streamlit as st
 
 from calculators.unit_converter import show as show_unit_converter
 
-from calculators.pipe_flow import (
-    show as show_pipe_flow
-)
+from calculators.pipe_flow import (show as show_pipe_flow)
+
+from calculators.pressure_drop import (show as show_pressure_drop)
 
 # Page Configuration
 
@@ -30,6 +30,7 @@ page = st.sidebar.radio(
         "📏 Unit Converter",
         "⚗️ Ideal Gas Law",
         "🌊 Pipe Flow",
+        "📉 Pipe Pressure Drop",
         "🔥 Heat Transfer"
     ]
 )
@@ -92,4 +93,7 @@ elif page == "⚗️ Ideal Gas Law":
 
 elif page == "🌊 Pipe Flow": 
     show_pipe_flow()
+
+elif page == "📉 Pipe Pressure Drop": 
+    show_pressure_drop()
 
