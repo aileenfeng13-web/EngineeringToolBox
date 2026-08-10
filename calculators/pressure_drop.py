@@ -52,6 +52,24 @@ def calculate_pressure_drop(
 
     return pressure_drop
 
+def validate_inputs(
+        pipe_length, diameter,density,velocity,viscocity,roughness):
+    """
+    Validate physical inputs for the pressure drop calculation.
+    """
+    if pipe_length <= 0: 
+        return "Pipe length must be greater than zero."
+    if diameter <= 0: 
+        return "Diameter must be greater than zero."
+    if density <= 0: 
+        return "Density must be greater than zero."
+    if velocity < 0: 
+        return "Velocity cannot be negative."
+    if roughness < 0: 
+        return "Pipe roughness cannot be negative."
+
+    return None
+
 def show(): 
     page_header(
         "📉 Pipe Pressure Drop",
@@ -100,6 +118,14 @@ def show():
     )
 
     if st.button("Calculate Pressure Drop"):
+
+        error = validate_inputs(
+            pipe_length, diameter, density, velocity, viscosity, roughness
+        )
+        if error: 
+            st.error(error)
+            return 
+
         reynolds = (density * velocity * diameter / viscosity)
 
         if reynolds < 2300: 
@@ -108,6 +134,12 @@ def show():
             flow_regime = "Transitional" 
         else: 
             flow_regime = "Turbulent"
+
+        if flow_regime == "Transitional":
+            st.warning(
+                "Flow is transitional." 
+                "The friction factor estimate may be less reliable in this regime"
+            )
 
         friction_factor = calculate_friction_factor(
             reynolds, roughness, diameter
