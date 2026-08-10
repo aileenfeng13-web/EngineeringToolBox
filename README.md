@@ -71,22 +71,17 @@ where:
 ## project Structure
 
 Engineering Tool Box/
-│
-├── app.py
-│
-├── calculators/
-│   ├── ideal_gas.py
-│   ├── pipe_flow.py
-│   └── pressure_drop.py
-│
-├── tests/
-│   └── test_pressure_drop.py
-│
-├── utils/
-│   └── layout.py
-│
-├── .gitignore
-└── README.md
+- app.py
+-  calculators/
+    - ideal_gas.py
+    -  pipe_flow.py
+    - pressure_drop.py
+- tests/
+    - test_pressure_drop.py
+- utils/ 
+    - layout.py
+- .gitignore
+- README.md
 
 ## How to Run 
 
