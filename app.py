@@ -59,6 +59,62 @@ if page == "🏠 Home":
 
     st.divider()
 
+    st.header("Avaliable Tools")
+    col1, col2 = st.columns(2)
+
+    with col1: 
+        st.subheader("🌡️ Thermodynamics")
+        st.write(
+            """
+            Calculate properties of ideal gases using the Ideal Gas Law.
+            """
+        )
+        st.markdown(
+            """
+            **Avaliable calculations** 
+            - Ideal Gas Law 
+            - Pressure
+            - Volume 
+            - Temperature
+            - Moles
+            """
+        )
+
+        with col2:
+            st.subheader("🌊 Fluid Mechanics")
+            st.write(
+                """
+                Analyze flow behavior and pressure losses in pipes.
+                """
+            )
+            st.markdown(
+                """
+                **Avaliable calculations**
+                - Reynolds Number 
+                - Flow Regime
+                - Friction Factor
+                - Pressure Drop
+                """
+            )
+        st.divider()
+
+        st.header("Technologies")
+        st.write(
+            """
+            Python • Streamlit • NumPy • Matplotlib • Pytest • Git • GitHub
+            """
+        )
+
+        st.divider()
+
+        st.header("About This Project")
+        st.write(
+            """
+            This project was created to combine chemical engineering concepts with software development. 
+            The calculations are implemented using Python and tested using automated unit tests. 
+            """
+        )
+
     st.header("🚀 Current Progress")
 
     st.checkbox("Home Page", value=True)
