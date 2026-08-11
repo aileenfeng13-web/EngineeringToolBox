@@ -1,7 +1,7 @@
 # EngineeringToolBox
 A Python based engineering calculation and analysis toolkit built with Streamlit.
 
-![Engineering Toolbox Home Page] (images/home.png)
+![Engineering Toolbox Home Page](images/home.png)
 
 ## Overview 
 Engineering Toolbox is an interactive web application designed to perform common engineering calculations through a simple Streamlit interface. 
