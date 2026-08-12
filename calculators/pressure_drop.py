@@ -1,5 +1,6 @@
 import streamlit as st
 import math
+import numpy as np
 
 from utils.layout import (
     page_header, engineering_notes, footer
@@ -164,6 +165,39 @@ def show():
         ) 
 
         pressure_drop = calculate_pressure_drop(friction_factor, pipe_length_si, diameter_si, density, velocity_si)
+
+        lengths = np.linspace(1, pipe_length_si *2, 50)
+
+        pressure_drops = []
+        for length in lengths:
+            drop = calculate_pressure_drop(
+                friction_factor, length, diameter_si, density, velocity_si
+            )
+            pressure_drops.append(drop)
+
+        st.subheader("Pressure Drop vs. Pipe Length")
+        chart_data = {
+            "Pipe Length (m)": lengths, 
+            "Pressure Drop (Pa)": pressure_drops}
+        st.line_chart(chart_data, x="Pipe Length (m)", y="Pressure Drop (Pa)")
+
+        st.subheader("Pressure Drop vs. Velocity")
+        velocities = np.linspace(0.1, velocity_si*2, 50)
+
+        velocity_pressure_drops = []
+        for velocity_value in velocities: 
+            drop = calculate_pressure_drop(friction_factor, pipe_length_si, diameter_si, density, velocity_value)
+            velocity_pressure_drops.append(drop)
+
+        velocity_chart_data = {
+            "Velocity (m/s)": velocities, 
+            "Pressure Drop (Pa)": velocity_pressure_drops
+        }
+
+        st.line_chart(velocity_chart_data, x="Velocity (m/s)", y="Pressure Drop (Pa)")
+        st.caption(
+            "Note: This visualization hols the friction factor constant while varying velocity."
+        )
 
         st.success("Calculation Complete")
 

@@ -110,8 +110,7 @@ if page == "🏠 Home":
         st.header("About This Project")
         st.write(
             """
-            This project was created to combine chemical engineering concepts with software development. 
-            The calculations are implemented using Python and tested using automated unit tests. 
+            This project was created to combine chemical engineering concepts with software development. The calculations are implemented using Python and tested using automated unit tests. 
             """
         )
 
@@ -133,9 +132,7 @@ if page == "🏠 Home":
 
     st.write(
         """
-        This project demonstrates software engineering,
-        Python programming, engineering calculations,
-        and interactive visualization.
+        This project demonstrates software engineering, Python programming, engineering calculations, and interactive visualization.
         """
     )
 

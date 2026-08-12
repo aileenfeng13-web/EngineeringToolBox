@@ -92,12 +92,13 @@ def show():
                     to_unit
                 )
 
-        st.success("Conversion Complete!")
+            st.success("Conversion Complete!")
 
-        st.metric(
-            label = "Result", 
-            value = f"{result:.4f} {to_unit}"
-        )
+            st.metric(
+                label = "Result", 
+                value = f"{result:.4f} {to_unit}"
+            )
+            
         with st.expander("Engineering Notes"):
             st.write(
                 """

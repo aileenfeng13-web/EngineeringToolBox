@@ -29,4 +29,26 @@ def test_kpa_to_pa():
 def test_pa_to_kpa(): 
     result = from_pa(100000, "kPa")
     assert result == 100
-    
+
+def test_equivalent_length_units():
+    metres = convert_length(1, "m")
+    centimetres = convert_length(100, "cm")
+    inches = convert_length(39.3700787, "in")
+
+    assert abs(metres - centimetres) < 0.000001
+    assert abs(metres - inches) < 0.000001
+
+def test_equivalent_velocity_units():
+    metres_per_second = convert_velocity(1, "m/s")
+    feet_per_second = convert_velocity(3.2808399, "ft/s")
+
+    assert abs(metres_per_second - feet_per_second) < 0.000001
+
+def test_equivalent_pressure_units(): 
+    pa = convert_pressure(100000, "Pa")
+    kpa = convert_pressure(100, "kPa")
+    bar = convert_pressure(1, "bar")
+
+    assert pa == kpa
+    assert pa == bar 
+
