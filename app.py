@@ -2,9 +2,11 @@ import streamlit as st
 
 from calculators.unit_converter import show as show_unit_converter
 
-from calculators.pipe_flow import (show as show_pipe_flow)
+from calculators.pipe_flow import show as show_pipe_flow
 
-from calculators.pressure_drop import (show as show_pressure_drop)
+from calculators.pressure_drop import show as show_pressure_drop
+
+from calculators.heat_transfer import show as show_heat_transfer
 
 # Page Configuration
 
@@ -149,4 +151,7 @@ elif page == "🌊 Pipe Flow":
 
 elif page == "📉 Pipe Pressure Drop": 
     show_pressure_drop()
+
+elif page == "🔥 Heat Transfer":
+    show_heat_transfer
 
