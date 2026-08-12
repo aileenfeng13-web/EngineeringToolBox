@@ -2,9 +2,11 @@ import streamlit as st
 import math
 
 from utils.layout import (
-    page_header,
-    engineering_notes, 
-    footer
+    page_header, engineering_notes, footer
+)
+
+from utils.unit_conversions import (
+    convert_length, convert_velocity, convert_pressure, from_pa
 )
 
 def calculate_friction_factor(
@@ -98,11 +100,19 @@ def show():
         value=10.0, 
         min_value=0.0001
     )
+    pipe_length_unit = st.selectbox(
+        "Length Unit", 
+        ["m", "cm", "mm", "ft", "in"]
+    )
 
     diameter = st.number_input(
         "Pipe Diameter (m)", 
         value=0.10, 
         min_value=0.0001
+    )
+    diameter_unit = st.selectbox(
+        "Diameter Unit", 
+        ["m", "cm", "mm", "ft", "in"]
     )
 
     density = st.number_input(
@@ -116,6 +126,10 @@ def show():
         value=1.0, 
         min_value=0.0
     )
+    velocity_unit = st.selectbox(
+        "Velocity Unit", 
+        ["m/s", "cm/s", "ft/s", "km/h", "mph"]
+    )
 
     if st.button("Calculate Pressure Drop"):
 
@@ -126,7 +140,11 @@ def show():
             st.error(error)
             return 
 
-        reynolds = (density * velocity * diameter / viscosity)
+        pipe_length_si = convert_length(pipe_length, pipe_length_unit)
+        diameter_si = convert_length(diameter, diameter_unit)
+        velocity_si = convert_velocity(velocity, velocity_unit)
+
+        reynolds = (density * velocity_si * diameter_si / viscosity)
 
         if reynolds < 2300: 
             flow_regime = "Laminar"
@@ -142,10 +160,10 @@ def show():
             )
 
         friction_factor = calculate_friction_factor(
-            reynolds, roughness, diameter
+            reynolds, roughness, diameter_si
         ) 
 
-        pressure_drop = calculate_pressure_drop(friction_factor, pipe_length, diameter, density, velocity)
+        pressure_drop = calculate_pressure_drop(friction_factor, pipe_length_si, diameter_si, density, velocity_si)
 
         st.success("Calculation Complete")
 
@@ -155,7 +173,12 @@ def show():
 
         st.metric("Friction Factor", f"{friction_factor:.5f}")
 
-        st.metric("Pressure Drop", f"{pressure_drop:.2f} Pa")
+        pressure_unit = st.selectbox(
+            "Pressure Output Unit", 
+            ["Pa", "kPa", "MPa", "bar", "psi"]
+        )
+        pressure_drop_converted = from_pa(pressure_drop, pressure_unit)
+        st.metric("Pressure Drop", f"{pressure_drop_converted:.2f} {pressure_unit}")
 
     engineering_notes(
         """
