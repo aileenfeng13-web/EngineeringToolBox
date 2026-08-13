@@ -7,6 +7,24 @@ def find_pipe_diameter(
     """
     Find the smallest pipe diameter that satisfies the maximum allowable pressure drop.
     """
+    if pipe_length <= 0: 
+        raise ValueError("Pipe length must be greater than zero.")
+
+    if density <= 0: 
+        raise ValueError("Density must be greater than zero.")
+
+    if velocity <= 0: 
+        raise ValueError("Velocity must be greater than zero.")
+
+    if viscosity <= 0:
+        raise ValueError("Viscosity must be greater than zero.")
+
+    if roughness < 0: 
+        raise ValueError("Roughness cannot be negative.")
+
+    if max_pressure_drop <= 0:
+        raise ValueError("Maximum pressure drop must be greater than zero.")
+    
     diameters = [
         0.01 + i * 0.001
         for i in range(200)
@@ -55,7 +73,7 @@ def show():
     )
     roughness = st.number_input(
         "Aboslute Roughness (m)",
-        value=0.0000045,
+        value=0.000045,
         min_value=0.0,
         format="%.6f"
     )
@@ -66,9 +84,16 @@ def show():
     )
 
     if st.button("Find Pipe Diameter"):
-        diameter, pressure_drop = find_pipe_diameter(
-            pipe_length, density, velocity, viscosity, roughness, max_pressure_drop
-        )
+
+        try: 
+            diameter, pressure_drop = find_pipe_diameter(
+                pipe_length, density, velocity, viscosity, roughness, max_pressure_drop
+            )
+
+        except ValueError as error:
+            st.error(str(error))
+            return
+        
         if diameter is None:
             st.error(
                 "No suitable pipe diameter was found"

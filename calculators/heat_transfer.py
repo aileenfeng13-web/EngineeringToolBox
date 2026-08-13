@@ -12,6 +12,18 @@ def calculate_heat_transfer(k, area, temperature_difference, thickness):
 
     Returns: Heat transfer rate (W)
     """
+    if k <= 0:
+        raise ValueError("Thermal conductivity must be greater than zero.")
+
+    if area <= 0: 
+        raise ValueError("Area must be greater than zero.")
+
+    if temperature_difference <= 0:
+        raise ValueError("Temperature difference must be greater than zero.")
+
+    if thickness <= 0:
+        raise ValueError("Thickness must be greater than zero.")
+    
     heat_transfer = (k * area * temperature_difference /thickness)
     return heat_transfer
 
