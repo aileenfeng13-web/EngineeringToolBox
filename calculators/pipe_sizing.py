@@ -1,5 +1,5 @@
 import streamlit as st
-from calculators.pressure_drop import calculate_pressure_drop, calculate_friction_factor
+from calculators.pressure_drop import (calculate_pressure_drop, calculate_friction_factor)
 
 def find_pipe_diameter(
         pipe_length, density, velocity, viscosity, roughness, max_pressure_drop

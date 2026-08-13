@@ -158,8 +158,8 @@ elif page == "📉 Pipe Pressure Drop":
     show_pressure_drop()
 
 elif page == "🔥 Heat Transfer":
-    show_heat_transfer
+    show_heat_transfer()
 
 elif page == "🔧 Pipe Sizing": 
-    show_pipe_sizing
+    show_pipe_sizing()
 
