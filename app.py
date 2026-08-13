@@ -8,6 +8,8 @@ from calculators.pressure_drop import show as show_pressure_drop
 
 from calculators.heat_transfer import show as show_heat_transfer
 
+from calculators.pipe_sizing import show as show_pipe_sizing
+
 # Page Configuration
 
 st.set_page_config(
@@ -33,7 +35,8 @@ page = st.sidebar.radio(
         "⚗️ Ideal Gas Law",
         "🌊 Pipe Flow",
         "📉 Pipe Pressure Drop",
-        "🔥 Heat Transfer"
+        "🔥 Heat Transfer",
+        "🔧 Pipe Sizing"
     ]
 )
 
@@ -128,6 +131,8 @@ if page == "🏠 Home":
 
     st.checkbox("Heat Transfer Calculator")
 
+    st.checkbox("Pipe Sizing Calculator")
+
     st.divider()
 
     st.header("📖 About")
@@ -154,4 +159,7 @@ elif page == "📉 Pipe Pressure Drop":
 
 elif page == "🔥 Heat Transfer":
     show_heat_transfer
+
+elif page == "🔧 Pipe Sizing": 
+    show_pipe_sizing
 
