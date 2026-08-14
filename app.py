@@ -95,12 +95,29 @@ if page == "🏠 Home":
             st.markdown(
                 """
                 **Avaliable calculations**
+
                 - Reynolds Number 
                 - Flow Regime
                 - Friction Factor
                 - Pressure Drop
+                - Pipe Sizing
                 """
             )
+        st.divider()
+
+        st.subheader("🔥 Heat Transfer")
+        st.write(
+            """
+            Calculate conductive heat transfer through a material using Fourier's Law.
+            """
+        )
+        st.markdown(
+            """
+            **Avaliable calculations**
+            - Conductive heat transfer
+            - Fourier's law
+            """
+        )
         st.divider()
 
         st.header("Technologies")
@@ -140,6 +157,13 @@ if page == "🏠 Home":
     st.write(
         """
         This project demonstrates software engineering, Python programming, engineering calculations, and interactive visualization.
+        """
+    )
+
+    st.warning(
+        """
+        This toolbox is intended for educational and preliminary engineering calculations. 
+        Results should be independently verified before used for real engineering design.
         """
     )
 

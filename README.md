@@ -25,13 +25,19 @@ The project combines engineering theory with Python programming, data visualizat
 - Darcy-Weisbach pressure drop calculation 
 - Darcy friction factor estimation
 - Pipe roughness effects
+- Pipe sizing
+
+### Heat Transfer
+- Conductive heat transfer
+- Fourier's Law
 
 ## Software Features
 - Interactive Streamlit interface
 - Input validation 
 - Error handling 
-- Automated unit tests
+- Automated testing
 - Modular Python calculation fuctions
+- Interactive visualizations
 
 ## Engineering Calculations 
 
@@ -61,6 +67,65 @@ where:
 - $\rho$ = Fluid density 
 - $v$ = Fluid velocity
 
+### Friction Factor 
+For turbulent flow, the friction factor is determined using the pipe roughness and Reynolds Number. 
+The toolbox uses the following relationship: 
+
+$$
+f =
+\frac{0.25}
+{\left[
+    \log_{10}
+    \left(
+        \frac{\epsilon}{3.7D}
+        +
+        \frac{5.74}{Re^{0.9}}
+        \right)
+    \right]^2}
+$$
+Where: 
+$f$ = Darcy friction factor
+$\epsilon$ = absolute pipe roughness (m)
+$D$ = pipe diameter (m)
+$Re$ = Reynolds Number
+
+### Conductive Heat Transfer
+Heat transfer through a plane wall is calculated using Fourier's Law:
+
+$$
+Q = 
+\frac{kA\Delta T}{L}
+$$
+Where:
+- $Q$ = Heat transfer rate (W)
+- $k$ = Thermal conductivity (W/m·K)
+- $A$ = Heat transfer area (m²)
+- $\Delta T$ = Temperature difference (K)
+- $L$ = Material thickness (m)
+
+### Pipe Sizing 
+The pipe sizing tool uses an iterative design approach. Candidate pipe diameters are evaluated using: 
+
+$$
+Re = \frac{\rho vD}{\mu}
+$$
+
+Followed by the friction factor and Darcy-Weisbach equations: 
+$$
+\Delta P = 
+f\frac{L}{D}
+\frac{\rho v^2}{2}
+$$
+
+The smallest diameter satisfying the design constraint is selected: 
+$$
+\Delta P \leq \Delta P_{text{max}}
+$$
+
+Where: 
+- $\Delta P$ = Calculated pressure drop 
+- $\Delta P_$ = Maximum allowable pressure drop
+
 ## Technologies
 - Python 
 - Streamlit
@@ -78,11 +143,17 @@ Engineering Tool Box/
     - ideal_gas.py
     -  pipe_flow.py
     - pressure_drop.py
+    - heat_transfer.py
+    - pipe_sizing.py
 - tests/
     - test_pressure_drop.py
+    - test_heat_transfer.py
+    - test_pipe_sizing.py
 - utils/ 
     - layout.py
+    - unit_conversions.py
 - .gitignore
+- requirements.txt
 - README.md
 
 ## How to Run 
@@ -124,11 +195,6 @@ This project was developed to strengthen my skills in:
 - Technical documentation
 
 ## Future Improvements 
-Planned improvements include: 
-- Automatic unit conversion 
-- Additional fluid mechanics calculations
-- Pipe sizing calculations 
-- Improved friction factor correlations 
 - More automated tests 
-- Interactive engineering plots 
+- More interactive visualizations 
 - Additional thermodynamics calculations
